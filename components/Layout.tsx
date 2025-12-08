@@ -221,7 +221,7 @@ const Layout: React.FC = () => {
           <div className={`p-4 border-t border-gray-200 dark:border-gray-700/50 flex flex-col gap-4 relative transition-all duration-300 ${isCollapsed ? 'items-center' : ''}`}>
             {!isCollapsed && (
               <div className="text-xs text-center text-gray-500 dark:text-gray-500 whitespace-nowrap overflow-hidden">
-                Guia v1.1
+                Guia Definitivo (Criado por Lucas Amaral)
               </div>
             )}
 
