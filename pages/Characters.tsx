@@ -167,18 +167,26 @@ const Characters: React.FC = () => {
             key={char.id}
             layoutId={`card-${char.id}`}
             onClick={() => setSelectedId(char.id)}
-            className={`cursor-pointer rounded-2xl overflow-hidden bg-gradient-to-br ${char.color} shadow-lg relative h-64 hover:scale-105 transition-transform duration-300`}
+            className={`cursor-pointer rounded-2xl overflow-hidden shadow-lg relative h-64 hover:scale-105 transition-transform duration-300`}
           >
-            <div className="absolute inset-0 bg-black/10 hover:bg-black/0 transition-colors" />
-            <div className="absolute bottom-0 left-0 p-6 w-full bg-gradient-to-t from-black/80 to-transparent">
-              <h2 className="text-2xl font-black text-white uppercase tracking-wider">{char.name}</h2>
+            {/* Character Image */}
+            {char.image && (
+              <img
+                src={char.image}
+                alt={char.name}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            )}
+            {/* Fallback gradient if no image */}
+            {!char.image && (
+              <div className={`absolute inset-0 bg-gradient-to-br ${char.color}`} />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-6 w-full">
+              <h2 className="text-2xl font-black text-white uppercase tracking-wider drop-shadow-md">{char.name}</h2>
               <div className="flex items-center gap-2 text-sm text-gray-200">
                 <Zap size={14} /> {char.element}
               </div>
-            </div>
-            {/* Visual Icon Overlay */}
-            <div className="absolute top-4 right-4 text-white/20">
-              <User size={64} />
             </div>
           </motion.div>
         ))}
@@ -196,12 +204,24 @@ const Characters: React.FC = () => {
                 <X size={20} />
               </button>
 
-              <div className={`h-32 bg-gradient-to-r ${selectedChar.color} p-6 relative`}>
-                <div className="flex items-end h-full">
-                  <div>
-                    <h2 className="text-4xl font-black text-white drop-shadow-md">{selectedChar.name}</h2>
-                    {selectedChar.fullName && <p className="text-white/90 text-sm font-medium">{selectedChar.fullName}</p>}
-                  </div>
+              <div className={`h-40 relative overflow-hidden`}>
+                {/* Character Image as background */}
+                {selectedChar.image && (
+                  <img
+                    src={selectedChar.image}
+                    alt={selectedChar.name}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                )}
+                {/* Fallback gradient if no image */}
+                {!selectedChar.image && (
+                  <div className={`absolute inset-0 bg-gradient-to-r ${selectedChar.color}`} />
+                )}
+                {/* Overlay gradient for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                <div className="absolute bottom-0 left-0 p-6">
+                  <h2 className="text-4xl font-black text-white drop-shadow-md">{selectedChar.name}</h2>
+                  {selectedChar.fullName && <p className="text-white/90 text-sm font-medium">{selectedChar.fullName}</p>}
                 </div>
               </div>
 
