@@ -13,6 +13,7 @@ import Timeline from './pages/Timeline';
 import Jukebox from './pages/Jukebox';
 import Challenges from './pages/Challenges';
 import Quiz from './pages/Quiz';
+import Versions from './pages/Versions';
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const App: React.FC = () => {
           <Route path="characters" element={<Characters />} />
           <Route path="items" element={<Items />} />
           <Route path="bestiary" element={<Bestiary />} />
+          <Route path="versions" element={<Versions />} />
           <Route path="techs" element={<Techs />} />
           <Route path="extras" element={<Extras />} />
           <Route path="timeline" element={<Timeline />} />

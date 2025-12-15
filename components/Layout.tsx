@@ -138,6 +138,7 @@ const Layout: React.FC = () => {
     { path: '/characters', label: 'Personagens', icon: <Users size={20} /> },
     { path: '/items', label: 'Itens & Equip.', icon: <Package size={20} /> },
     { path: '/bestiary', label: 'Bestiário', icon: <Skull size={20} /> },
+    { path: '/versions', label: 'Versões', icon: <Gamepad2 size={20} /> },
     { path: '/techs', label: 'Techs & Combos', icon: <Sword size={20} /> },
     { path: '/extras', label: 'Extras & Segredos', icon: <Sparkles size={20} /> },
     { path: '/timeline', label: 'Linha do Tempo', icon: <Clock size={20} /> },
