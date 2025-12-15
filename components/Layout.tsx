@@ -17,6 +17,9 @@ import {
   ChevronRight,
   Play,
   Pause,
+  Package,
+  Skull,
+  Sparkles,
 } from 'lucide-react';
 
 declare global {
@@ -133,7 +136,14 @@ const Layout: React.FC = () => {
     { path: '/', label: 'Início', icon: <Gamepad2 size={20} /> },
     { path: '/walkthrough', label: 'História & Guia', icon: <BookOpen size={20} /> },
     { path: '/characters', label: 'Personagens', icon: <Users size={20} /> },
+    { path: '/items', label: 'Itens & Equip.', icon: <Package size={20} /> },
+    { path: '/bestiary', label: 'Bestiário', icon: <Skull size={20} /> },
     { path: '/techs', label: 'Techs & Combos', icon: <Sword size={20} /> },
+    { path: '/extras', label: 'Extras & Segredos', icon: <Sparkles size={20} /> },
+    { path: '/timeline', label: 'Linha do Tempo', icon: <Clock size={20} /> },
+    { path: '/jukebox', label: 'Jukebox', icon: <Play size={20} /> },
+    { path: '/challenges', label: 'Desafios', icon: <Sword size={20} /> },
+    { path: '/quiz', label: 'Quiz', icon: <Gamepad2 size={20} /> },
     { path: '/endings', label: 'Finais', icon: <ListEnd size={20} /> },
   ];
 

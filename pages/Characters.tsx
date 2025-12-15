@@ -16,9 +16,10 @@ const charactersData: Character[] = [
   {
     id: "crono",
     name: "Crono",
-    bio: "Um jovem que só queria se divertir na Millenium Fair, mas acabou com uma bomba nas mãos. Usa Katanas e Magia de Luz (Light). Seus status são bem equilibrados.",
-    element: "Luz (Light)",
-    weapon: "Katana",
+    bio: "Protagonista silencioso, catalisador da aventura temporal. Sua jornada começa na Feira do Milênio e se expande para salvar o futuro.",
+    role: "Protagonista silencioso, catalisador da aventura temporal.",
+    element: "Luz/Trovão (Light/Lightning)",
+    weapon: "Katana (Espada)",
     color: "from-yellow-500 to-yellow-700",
     image: cronoImg,
     techs: [
@@ -36,9 +37,10 @@ const charactersData: Character[] = [
     id: "marle",
     name: "Marle",
     fullName: "Princesa Nadia",
-    bio: "Princesa rebelde de Guardia. Especialista em cura e magia de Gelo (Ice). Tem defesa fraca mas é essencial para suporte.",
-    element: "Gelo (Ice)",
-    weapon: "Besta (Bow)",
+    bio: "Princesa de Guardia, sua linhagem e seu desaparecimento iniciam o conflito temporal. Possui forte sinergia com Frog em techs de Gelo.",
+    role: "Princesa de Guardia, iniciadora do conflito temporal via Paradox.",
+    element: "Água/Gelo (Water/Ice)",
+    weapon: "Besta (Arco)",
     color: "from-blue-400 to-cyan-600",
     image: marleImg,
     techs: [
@@ -55,9 +57,10 @@ const charactersData: Character[] = [
   {
     id: "lucca",
     name: "Lucca",
-    bio: "Melhor amiga de Crono e gênia inventora. Usa pistolas e martelos. Especialista em magia de Fogo (Fire). Lenta, mas com alto poder mágico.",
+    bio: "Gênio inventora, responsável pela tecnologia de teletransporte e de portais. Amiga de infância de Crono e cérebro da equipe.",
+    role: "Inventora, responsável pela tecnologia de Gate e Telepod.",
     element: "Fogo (Fire)",
-    weapon: "Pistola",
+    weapon: "Arma (Pistola/Martelo)",
     color: "from-orange-500 to-red-600",
     image: luccaImg,
     techs: [
@@ -75,9 +78,10 @@ const charactersData: Character[] = [
     id: "frog",
     name: "Frog",
     fullName: "Glenn",
-    bio: "Cavaleiro honrado transformado em sapo por Magus. Usa espadas largas. Ótimo equilíbrio entre ataque físico, cura e magia de Água.",
-    element: "Água (Water)",
-    weapon: "Broadsword",
+    bio: "Cavaleiro amaldiçoado, cuja jornada é guiada pela honra e pela vingança contra Magus. Empunha a lendária Masamune.",
+    role: "Cavaleiro amaldiçoado, busca vingança contra Magus.",
+    element: "Água/Gelo (Water/Ice)",
+    weapon: "Espada (Broadsword)",
     color: "from-green-500 to-emerald-700",
     image: frogImg,
     techs: [
@@ -95,9 +99,10 @@ const charactersData: Character[] = [
     id: "robo",
     name: "Robo",
     fullName: "Prometheus (R-66Y)",
-    bio: "Robô do futuro de 2300 A.D. Lento, mas muito resistente e forte. Não usa magia elemental 'nativa' (exceto Laser que é Shadow/Dark), mas tem cura em área.",
+    bio: "Androide do futuro (2300 A.D.) que busca a redenção da humanidade e da tecnologia. Restaurado por Lucca.",
+    role: "Androide de 2300 A.D., busca redenção da humanidade.",
     element: "Sombra (Shadow) / Físico",
-    weapon: "Braço Robótico",
+    weapon: "Braço Mecânico",
     color: "from-gray-400 to-zinc-600",
     image: roboImg,
     techs: [
@@ -114,9 +119,10 @@ const charactersData: Character[] = [
   {
     id: "ayla",
     name: "Ayla",
-    bio: "Chefe da tribo Ioka na pré-história. Fortíssima fisicamente. Única personagem que não usa armas (usa os punhos). Possui a tech Charm para roubar itens.",
-    element: "Nenhum (Físico puro)",
-    weapon: "Punhos",
+    bio: "Líder da aldeia pré-histórica, focada em pura força e na técnica de Charm. Aliada vital na luta contra os Reptites.",
+    role: "Líder da tribo Ioka, força bruta e resistência.",
+    element: "Físico (Nenhum)",
+    weapon: "Punhos (Fists)",
     color: "from-yellow-400 to-orange-500",
     image: aylaImg,
     techs: [
@@ -134,7 +140,8 @@ const charactersData: Character[] = [
     id: "magus",
     name: "Magus",
     fullName: "Janus",
-    bio: "O Lorde das Trevas. Inicialmente vilão, pode se juntar ao grupo. Mestre de magia das Sombras (Shadow). Possui as magias mais fortes do jogo.",
+    bio: "Antagonista inicial (o Profeta) cujo objetivo final é eliminar Lavos e encontrar sua irmã, Schala. Mestre da magia Sombra.",
+    role: "Antagonista inicial, busca Schala e vingança contra Lavos.",
     element: "Sombra (Shadow)",
     weapon: "Foice (Scythe)",
     color: "from-purple-600 to-indigo-900",
@@ -228,7 +235,14 @@ const Characters: React.FC = () => {
               <div className="p-6 max-h-[60vh] overflow-y-auto">
                 <div className="mb-6">
                   <h3 className="text-chrono-blue font-bold mb-2 flex items-center gap-2"><User size={18} /> Biografia</h3>
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">{selectedChar.bio}</p>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm mb-4">{selectedChar.bio}</p>
+
+                  {selectedChar.role && (
+                    <div className="bg-chrono-blue/10 p-3 rounded-lg border border-chrono-blue/20 mb-4">
+                      <span className="text-xs text-chrono-blue font-bold uppercase block mb-1">Papel na História</span>
+                      <p className="text-gray-800 dark:text-gray-200 text-sm font-medium">{selectedChar.role}</p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 mb-6">

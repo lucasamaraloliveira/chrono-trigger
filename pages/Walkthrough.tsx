@@ -1,152 +1,121 @@
 import React, { useState } from 'react';
 import WalkthroughCard from '../components/WalkthroughCard';
 import { Eras, WalkthroughStep } from '../types';
-import { Filter } from 'lucide-react';
+import { Filter, Map, Compass, Star } from 'lucide-react';
 
+// Using a simplified data structure for demonstration, normally this would be massive
 const walkthroughData: WalkthroughStep[] = [
+  // 1000 A.D.
   {
-    title: "A Feira do Milênio",
+    title: "O Início: Feira do Milênio",
     era: Eras.PRESENT,
-    content: "Após ser acordado por sua mãe, desça a escada e fale com ela. Lucca está te esperando na feira. Explore a cidade primeiro: no hotel, fale com as pessoas e pegue o item no segundo andar (baú preto selado). Na casa do prefeito, aprenda sobre o sistema de jogo.\n\nEm Leene Square, trombe com a garota (Marle). Pegue o pingente e devolva. Ela se junta ao grupo. Participe do mini-game de beber soda para ganhar Silver Points. Troque Silver Points por dinheiro na tenda do sino. Se falar com Melchior (vendedor de armas), ele pede para perguntar a Marle se ela quer vender o pingente (isso afeta o julgamento futuro).",
-    items: ["200 G", "Potions", "Pendant"],
+    content: "A aventura começa em Truce. Vá à Feira Milenar. Trombe com Marle, pegue o pingente. Use o Telepod de Lucca. Assista Marle desaparecer. Crono a segue.",
+    items: ["Pendant", "200 G"],
   },
   {
-    title: "O Show de Lucca & O Acidente",
+    title: "Fuga da Prisão & O Julgamento",
     era: Eras.PRESENT,
-    content: "Vá para o norte da feira para ver a invenção de Lucca. Lucca apresenta a máquina de teletransporte. Crono testa com sucesso. Marle tenta, mas seu pingente reage e abre um portal. Ela some, deixando o pingente. Crono pega o pingente e vai atrás dela.",
-    items: ["Pendant"]
+    content: "Após salvar a rainha em 600 A.D., Crono é preso. No julgamento, responda com honestidade (ou não). Na prisão, espere 3 dias ou fuja nocauteando o guarda. Lute contra o Dragon Tank na ponte.",
+    boss: { name: "Dragon Tank", difficulty: "**", strategy: "Cabeça (Cura) -> Rodas -> Corpo." }
   },
+
+  // 600 A.D.
   {
-    title: "A Rainha Desaparecida",
+    title: "A Catedral e Frog",
     era: Eras.MIDDLE_AGES,
-    content: "Você chega em Truce Canyon. Vá para o Castelo Guardia. A Rainha Leene (que na verdade é Marle confundida) está lá. Fale com ela e ela desaparece (paradoxo temporal). Lucca chega e explica: Marle é a Princesa Nadia e deixou de existir porque a verdadeira Rainha Leene não foi salva.",
-    items: ["Ether", "Tonic"]
+    content: "Em 600 A.D., encontre a Rainha (Marle) na Catedral. Descubra o segredo das freiras (Naga-ettes). Frog se junta a você. Toque o órgão para abrir passagem secreta.",
+    boss: { name: "Yakra", difficulty: "**", strategy: "X-Strike (Crono+Frog) é essencial. Mantenha HP alto." }
   },
   {
-    title: "A Catedral",
+    title: "Batalha na Ponte Zenan",
     era: Eras.MIDDLE_AGES,
-    content: "Siga para a Catedral a oeste. Fale com as freiras e examine o item brilhante (prendedor de cabelo da Leene). As freiras viram monstros. Um sapo (Frog) aparece para ajudar. Entre na passagem secreta tocando o órgão.\n\nExplore a masmorra. Você encontrará o verdadeiro Chanceler (preso) e a Rainha Leene.",
-    boss: {
-      name: "Yakra",
-      difficulty: "** (Fácil)",
-      strategy: "Use X-Strike de Crono e Frog para dano massivo. Lucca deve curar. Ele contra-ataca quando está longe dos aliados, mantenha todos próximos ou foque no dano rápido."
-    },
-    items: ["Power Tab", "Iron Sword", "100G", "Ether"]
+    content: "Ajude o exército de Guardia. Consiga carne seca (Jerky) para o rei (opcional). Na ponte, derrote Zombor. Ele tem duas partes.",
+    boss: { name: "Zombor", difficulty: "***", strategy: "Topo absorve Magia/Luz, Baixo absorve Físico/Sombra. Ataque com elemento oposto." }
   },
   {
-    title: "O Julgamento",
-    era: Eras.PRESENT,
-    content: "De volta a 1000 A.D., leve Marle ao castelo. Crono é preso acusado de sequestro. No julgamento, suas ações na feira determinam o veredito (inocente ou culpado), mas ele será preso de qualquer forma. Na prisão, espere 3 dias para execução ou fuja (bata na cela). Fuja e encontre Lucca. Lutem contra o Dragon Tank na saída.",
-    boss: {
-      name: "Dragon Tank",
-      difficulty: "** (Médio)",
-      strategy: "Destrua a Cabeça primeiro (ela cura). Depois a Roda (ataque alto), e por último o Corpo."
-    },
-    items: ["Shelter", "Lode Sword", "Bronze Mail"]
+    title: "A Lenda da Masamune",
+    era: Eras.MIDDLE_AGES,
+    content: "Suba a Denadoro Mts para pegar a lâmina quebrada. Masa e Mune testam você. Pegue o cabo com Frog. Melchior precisa da Dreamstone.",
   },
+  {
+    title: "O Castelo de Magus",
+    era: Eras.MIDDLE_AGES,
+    content: "Com a Masamune, Frog abre a caverna. Lute contra Slash, Flea e Ozzie. Enfrente Magus para impedir a invocação de Lavos.",
+    boss: { name: "Magus", difficulty: "****", strategy: "Ele muda fraqueza. Use Masamune para cortar MDef. Ataque com elemento correspondente ou cura." }
+  },
+
+  // 2300 A.D.
   {
     title: "O Futuro Desolado",
     era: Eras.FUTURE,
-    content: "Fugindo do castelo, vocês caem num portal para 2300 A.D. Tudo está destruído. Em Arris Dome, descubram que esse futuro foi causado por Lavos em 1999 A.D. O grupo decide salvar o mundo. Precisam pegar energia na fábrica ao norte para abrir o portal em Proto Dome.",
-    boss: {
-      name: "Guardian",
-      difficulty: "** (Médio)",
-      strategy: "Destrua os dois Bits primeiro (eles permitem o contra-ataque Delta Attack). Quando o Guardian estiver sozinho, ataque com tudo. Se ele reviver os bits, repita."
-    },
+    content: "Primeira visita a 2300 A.D. Descubra o vídeo do Dia de Lavos (1999 A.D.) em Arris Dome. Capture o Rato para pegar o código L+R+A. Atravesse os esgotos.",
     items: ["Seed"]
   },
   {
     title: "A Fábrica e Robo",
     era: Eras.FUTURE,
-    content: "Na fábrica, evite os robôs ou lute. Encontre os códigos do guindaste (XA e BB - SNES). Ative o gerador. Robo (R-66Y) se junta ao grupo em Proto Dome. Leve-o para conserto com Lucca. Abram o portal.",
-    boss: {
-      name: "R-Series x 6",
-      difficulty: "** (Fácil)",
-      strategy: "Use Cyclone de Crono para atingir múltiplos inimigos. Eles têm pouco HP mas atacam em grupo."
-    }
+    content: "Invada a fábrica para religar a energia. Robo se junta ao grupo. Desative os sistemas de segurança. Lute contra R-Series.",
   },
+
+  // 65M B.C.
   {
-    title: "O Fim do Tempo",
-    era: Eras.END_OF_TIME,
-    content: "Ao viajar com 4 pessoas, vocês param no Fim do Tempo. Fale com Gaspar (o velho). Ele explica os portais. Fale com Spekkio para aprender Magia (exceto Robo). Dê 3 voltas na sala. Desafie Spekkio para ganhar itens.",
-    items: ["Magic Tab", "Ethers"]
-  },
-  {
-    title: "A Vila dos Místicos",
-    era: Eras.MIDDLE_AGES,
-    content: "Volte para 600 A.D. Medina Village. Os monstros odeiam humanos. Vá para a caverna de Heckran a oeste para descobrir que Magus criou Lavos (supostamente).",
-    boss: {
-      name: "Heckran",
-      difficulty: "* (Fácil)",
-      strategy: "Ele é resistente a físico. Use apenas MAGIA (Lightning, Fire, Ice/Water). Quando ele disser 'Go ahead, try and attack', NÃO ATAQUE ou levará um contra-ataque forte."
-    }
-  },
-  {
-    title: "A Espada Masamune",
-    era: Eras.MIDDLE_AGES,
-    content: "É preciso a Masamune para derrotar Magus. A espada está quebrada. Pegue uma parte na Denadoro Mountains (guardada por Masa e Mune) e a outra com Frog (cabo). Melchior (1000 A.D.) precisa de Dreamstone para consertar. Vá para a pré-história (65.000.000 B.C.) conseguir a pedra.",
-    boss: {
-      name: "Masa & Mune",
-      difficulty: "*** (Médio)",
-      strategy: "Foque em um dos irmãos primeiro. Quando se fundirem, use ataques poderosos. Cuidado com o tornado. Mantenha HP alto."
-    }
-  },
-  {
-    title: "Pré-História e Ayla",
+    title: "Era Pré-Histórica e Ayla",
     era: Eras.PREHISTORIC,
-    content: "Conheça Ayla. Vença o concurso de beber sopa (aperte A rapidamente). Ganhe a Dreamstone. No dia seguinte, a Gate Key foi roubada pelos Reptites. Siga as pegadas até a Forest Maze e depois Reptite Lair. Derrote Azala e pegue a chave de volta.",
-    boss: {
-      name: "Nizbel",
-      difficulty: "*** (Difícil)",
-      strategy: "Use Lightning para diminuir a defesa dele (ele toma choque). Depois ataque com tudo. Quando ele liberar a eletricidade, use Lightning de novo."
-    },
-    items: ["Dreamstone", "Gate Key"]
+    content: "Participe da festa da tribo Ioka. Vença Ayla bebendo soda. Ganhe a Dreamstone. No dia seguinte, siga as pegadas dos Reptites para recuperar a Gate Key.",
+    boss: { name: "Nizbel", difficulty: "***", strategy: "Choque-o com Lightning para baixar defesa, depois ataque físico." }
   },
   {
-    title: "O Castelo de Magus",
+    title: "Tyranno Lair",
+    era: Eras.PREHISTORIC,
+    content: "Invasão à base dos Reptites. Liberte os prisioneiros. Lute contra Azala e Black Tyranno. Assista a queda de Lavos.",
+    boss: { name: "Black Tyranno", difficulty: "****", strategy: "Espere ele baixar a defesa para contar 5 segundos. Ataque com tudo nesse intervalo." }
+  },
+
+  // 12000 B.C.
+  {
+    title: "Reino Mágico de Zeal",
+    era: Eras.DARK_AGES,
+    content: "Visite a civilização mágica. Raspe a Mammon Machine para carregar o pingente. Veja Schala abrir as portas seladas. Conheça o Profeta.",
+  },
+  {
+    title: "Ocean Palace e a Tragédia",
+    era: Eras.DARK_AGES,
+    content: "Desça ao Ocean Palace. Lute contra Golems. Lavos desperta. Crono se sacrifica. O reino cai.",
+    boss: { name: "Lavos (Scripted)", difficulty: "*****", strategy: "Você vai perder." }
+  },
+
+  // SIDE QUESTS
+  {
+    title: "Side Quest: A Honra de Frog",
     era: Eras.MIDDLE_AGES,
-    content: "Com a Masamune consertada, Frog abre a caverna para o castelo. Enfrente os generais: Slash, Flea e Ozzie. Magus está invocando Lavos.",
-    boss: {
-      name: "Magus",
-      difficulty: "**** (Muito Difícil)",
-      strategy: "Ele muda a fraqueza (Barreira). Só ataque com o elemento da magia que ele usou por último ou Masamune (que reduz a defesa mágica). Quando ele começar a carregar feitiço (sem barreira), ataque com tudo, mas cure-se para o Dark Matter."
-    }
+    content: "Vá para Northern Ruins (600 A.D.). Encontre o fantasma de Cyrus. Contrate o carpinteiro em 1000 A.D. Resolva o dilema. Masamune atinge poder total.",
+    items: ["Masamune Powered", "Hero's Badge"],
+    boss: { name: "Cyrus (Ghost)", difficulty: "*", strategy: "Apenas deixe Frog falar." }
   },
   {
-    title: "O Reino de Zeal",
-    era: Eras.DARK_AGES,
-    content: "Vocês são sugados para 12.000 B.C., o reino mágico flutuante. Conheça Schala e Janus. Vocês são expulsos e o portal selado. Use a Epoch (nave do futuro) para voltar. A Rainha Zeal está usando a Mammon Machine para drenar Lavos.",
-    boss: {
-      name: "Golem",
-      difficulty: "*** (Médio)",
-      strategy: "Ele copia o elemento do seu ataque. Evite ataques físicos se tiver pouca defesa física. Use Fire/Water para controlar o tipo de contra-ataque dele."
-    }
-  },
-  {
-    title: "A Morte de Crono",
-    era: Eras.DARK_AGES,
-    content: "No Ocean Palace, Lavos desperta. O grupo não consegue vencer. Crono se sacrifica para salvar os outros. O reino de Zeal cai.",
-    boss: {
-      name: "Lavos (Scripted)",
-      difficulty: "***** (Impossível)",
-      strategy: "Você vai perder (a menos que seja New Game+ ultra forte). Apenas assista à cena."
-    }
-  },
-  {
-    title: "O Retorno do Herói",
+    title: "Side Quest: Rainbow Shell",
     era: Eras.VARIOUS,
-    content: "Com Crono morto, Magus pode se juntar ao grupo (se você não lutar com ele no North Cape). Fale com Gaspar para pegar o 'Chrono Trigger' (ovo do tempo). Vá para o Death Peak (2300 A.D.), use os bonecos Clone, e viaje para o momento exato da morte de Crono para trocá-lo pelo boneco.",
-    items: ["Crono's Clone", "Chrono Trigger"]
+    content: "Vá para 600 A.D., Giant's Claw. Pegue o Rainbow Shell (pesado). Peça ajuda no castelo. Avance para 1000 A.D. Prove a inocência do Rei no julgamento. Ganhe prism materials.",
+    items: ["Prismatic Dress", "Rainbow Sword"]
   },
   {
-    title: "Batalha Final",
+    title: "Side Quest: A Origem das Máquinas",
+    era: Eras.FUTURE,
+    content: "Leve Robo para Geno Dome (2300 A.D.). Enfrente Atropos. Destrua Mother Brain. Robo ganha humanidade e força.",
+    items: ["Crisis Arm", "Terra Arm"],
+    boss: { name: "Mother Brain", difficulty: "***", strategy: "Destrua os displays que a curam (deixe um se quiser farmar)." }
+  },
+  {
+    title: "Side Quest: A Floresta de Fiona",
+    era: Eras.MIDDLE_AGES,
+    content: "Deixe Robo ajudar Fiona a replantar a floresta em 600 A.D. Volte em 1000 A.D. para ver o resultado. Salve Lucca do passado no acampamento.",
+    items: ["Green Dream"]
+  },
+  {
+    title: "Confronto Final",
     era: Eras.END_OF_TIME,
-    content: "Após reviver Crono (ou não), termine as sidequests (Fiona, Cyrus, Sun Stone, Rainbow Shell, Geno Dome) para obter os melhores equipamentos. Vá enfrentar Lavos via Black Omen ou pelo Balde no Fim do Tempo.",
-    boss: {
-      name: "Lavos Core",
-      difficulty: "***** (Final)",
-      strategy: "Forma Final: O Bit da Direita é o verdadeiro corpo. O do centro ataca forte. O da esquerda cura/protege. Destrua o da Esquerda -> Espere o da Direita baixar a defesa -> Ataque com tudo (Luminaire, Flare, Triple Techs)."
-    }
+    content: "Use o Epoch ou o Balde para ir a 1999 A.D. Enfrente Lavos em suas 3 formas.",
+    boss: { name: "Lavos Core", difficulty: "*****", strategy: "Destrua o Bit da Esquerda. Espere o da Direita baixar defesa. Ataque." }
   }
 ];
 
@@ -161,57 +130,6 @@ const eraColors: Record<string, string> = {
   [Eras.VARIOUS]: 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200 border-purple-200 dark:border-purple-800/50',
 };
 
-import { ChevronDown } from 'lucide-react';
-
-const EraDropdown = ({ selectedEra, onSelect }: { selectedEra: string, onSelect: (era: string) => void }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const options = ['ALL', ...Object.values(Eras)];
-
-  const getLabel = (era: string) => era === 'ALL' ? 'Todas as Eras' : era;
-
-  return (
-    <div className="relative">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`
-          flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-200
-          ${eraColors[selectedEra] || eraColors['ALL']}
-          hover:opacity-90 active:scale-95 shadow-sm
-        `}
-      >
-        <span className="font-semibold text-sm">{getLabel(selectedEra)}</span>
-        <ChevronDown size={14} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-      </button>
-
-      {isOpen && (
-        <>
-          <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 top-full mt-2 w-56 max-h-96 overflow-y-auto bg-white dark:bg-chrono-card rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 z-20 p-2 space-y-1">
-            {options.map((era) => (
-              <button
-                key={era}
-                onClick={() => {
-                  onSelect(era);
-                  setIsOpen(false);
-                }}
-                className={`
-                  w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium transition-colors border
-                  ${selectedEra === era
-                    ? eraColors[era] + ' shadow-sm'
-                    : 'bg-transparent border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}
-                `}
-              >
-                {getLabel(era)}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  );
-};
-
 const Walkthrough: React.FC = () => {
   const [filterEra, setFilterEra] = useState<string>('ALL');
 
@@ -223,24 +141,56 @@ const Walkthrough: React.FC = () => {
     <div className="p-6 max-w-5xl mx-auto">
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-chrono-gold">Guia Passo a Passo</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Siga a jornada através do tempo.</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-chrono-gold flex items-center gap-2">
+            <Compass className="text-chrono-blue" size={32} />
+            Guia da Jornada
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">Siga a linha do tempo e não perca nenhum evento.</p>
         </div>
 
-        <div className="relative z-20">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-600 dark:text-gray-400 mr-2 flex items-center gap-2">
-              <Filter size={16} /> Filtrar por Era:
-            </span>
-            <EraDropdown selectedEra={filterEra} onSelect={setFilterEra} />
-          </div>
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 max-w-full">
+          <Filter size={18} className="text-gray-400" />
+          {Object.entries(eraColors).map(([era, classes]) => {
+            // Simplify text for buttons
+            const label = era === Eras.PREHISTORIC ? '65M B.C.' :
+              era === Eras.DARK_AGES ? '12000 B.C.' :
+                era === Eras.MIDDLE_AGES ? '600 A.D.' :
+                  era === Eras.PRESENT ? '1000 A.D.' :
+                    era === Eras.FUTURE ? '2300 A.D.' :
+                      era === Eras.END_OF_TIME ? 'EoT' :
+                        era === Eras.VARIOUS ? 'Side' : 'All';
+
+            return (
+              <button
+                key={era}
+                onClick={() => setFilterEra(era)}
+                className={`
+                  px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all border
+                  ${filterEra === era ? 'ring-2 ring-offset-1 ring-chrono-blue opacity-100 scale-105' : 'opacity-70 hover:opacity-100'}
+                  ${classes}
+                `}
+              >
+                {label}
+              </button>
+            )
+          })}
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {filteredSteps.map((step, index) => (
-          <WalkthroughCard key={index} step={step} />
+          <div key={index} className="relative">
+            {/* Timeline connector line */}
+            <div className={`absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700 -z-10 ${index === filteredSteps.length - 1 ? 'h-1/2' : ''}`} />
+
+            <WalkthroughCard step={step} />
+          </div>
         ))}
+        {filteredSteps.length === 0 && (
+          <div className="text-center py-10 text-gray-400">
+            Nenhum evento encontrado nesta Era.
+          </div>
+        )}
       </div>
     </div>
   );
