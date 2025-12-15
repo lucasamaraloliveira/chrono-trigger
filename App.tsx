@@ -14,6 +14,7 @@ import Jukebox from './pages/Jukebox';
 import Challenges from './pages/Challenges';
 import Quiz from './pages/Quiz';
 import Versions from './pages/Versions';
+import Legacy from './pages/Legacy';
 
 const App: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: React.FC = () => {
           <Route path="items" element={<Items />} />
           <Route path="bestiary" element={<Bestiary />} />
           <Route path="versions" element={<Versions />} />
+          <Route path="legacy" element={<Legacy />} />
           <Route path="techs" element={<Techs />} />
           <Route path="extras" element={<Extras />} />
           <Route path="timeline" element={<Timeline />} />

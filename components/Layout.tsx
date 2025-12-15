@@ -1,25 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
-  BookOpen,
-  Users,
-  Sword,
-  Clock,
-  Menu,
-  X,
-  Gamepad2,
-  ListEnd,
-  Sun,
-  Moon,
-  Volume2,
-  VolumeX,
-  ChevronLeft,
-  ChevronRight,
-  Play,
-  Pause,
-  Package,
-  Skull,
-  Sparkles,
+  Menu, X, Home, Users, Map, Sword, Settings, Package, Skull, Sparkles, Clock, Play, Gamepad2, Vote, BookOpen,
+  ListEnd, Volume2, VolumeX, ChevronLeft, ChevronRight, Pause, Sun, Moon
 } from 'lucide-react';
 
 declare global {
@@ -139,6 +122,7 @@ const Layout: React.FC = () => {
     { path: '/items', label: 'Itens & Equip.', icon: <Package size={20} /> },
     { path: '/bestiary', label: 'Bestiário', icon: <Skull size={20} /> },
     { path: '/versions', label: 'Versões', icon: <Gamepad2 size={20} /> },
+    { path: '/legacy', label: 'Legado (Sequências)', icon: <BookOpen size={20} /> },
     { path: '/techs', label: 'Techs & Combos', icon: <Sword size={20} /> },
     { path: '/extras', label: 'Extras & Segredos', icon: <Sparkles size={20} /> },
     { path: '/timeline', label: 'Linha do Tempo', icon: <Clock size={20} /> },
